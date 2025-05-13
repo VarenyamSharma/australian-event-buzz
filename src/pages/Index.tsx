@@ -5,6 +5,8 @@ import EventCard from "@/components/EventCard";
 import EmailDialog from "@/components/EmailDialog";
 import { Event } from "@/types/event";
 import { fetchEvents } from "@/services/eventService";
+import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
 
 // Mock data - This would be replaced with actual API calls
 const mockEvents: Event[] = [
@@ -47,27 +49,44 @@ const Index = () => {
   const [events, setEvents] = useState<Event[]>(mockEvents);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   
-  useEffect(() => {
-    // In a real application, here you would fetch events from your backend API
-    const getEvents = async () => {
-      try {
-        // Uncomment this line when backend is ready
-        // const data = await fetchEvents();
-        // setEvents(data);
-      } catch (error) {
-        console.error('Failed to fetch events:', error);
+  const loadEvents = async () => {
+    setIsLoading(true);
+    try {
+      // In a real application, this would fetch from the API
+      // const data = await fetchEvents();
+      // setEvents(data);
+      
+      // For demo purposes, we'll just use the mock data and show a toast
+      setTimeout(() => {
+        setEvents(mockEvents);
         toast({
-          title: "Error",
-          description: "Failed to load events. Please try again later.",
-          variant: "destructive"
+          title: "Events Refreshed",
+          description: "The latest events have been loaded.",
         });
-      }
-    };
-    
-    getEvents();
-  }, [toast]);
+        setIsLoading(false);
+      }, 800);
+    } catch (error) {
+      console.error('Failed to fetch events:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load events. Please try again later.",
+        variant: "destructive"
+      });
+      setIsLoading(false);
+    }
+  };
+  
+  useEffect(() => {
+    // Initial load of events
+    loadEvents();
+  }, []);
+  
+  const handleRefresh = () => {
+    loadEvents();
+  };
   
   const handleGetTickets = (event: Event) => {
     setSelectedEvent(event);
@@ -114,7 +133,18 @@ const Index = () => {
       
       {/* Events Listing */}
       <section className="container mx-auto px-4 py-12">
-        <h2 className="text-3xl font-bold mb-8 text-gray-800">Upcoming Events</h2>
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-800">Upcoming Events</h2>
+          <Button 
+            onClick={handleRefresh} 
+            variant="outline"
+            disabled={isLoading}
+            className="flex items-center gap-2"
+          >
+            <RefreshCw className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
+            Refresh Events
+          </Button>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {events.map((event) => (
