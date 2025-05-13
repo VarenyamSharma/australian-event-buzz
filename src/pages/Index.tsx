@@ -124,7 +124,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-purple-700 to-indigo-800 text-white py-16">
+      <section className="bg-gradient-to-r from-purple-700 to-indigo-800 text-white py-10">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Sydney Events</h1>
           <p className="text-xl md:text-2xl max-w-2xl">Discover the best events happening in Sydney, Australia. From concerts and festivals to exhibitions and sports.</p>

@@ -16,7 +16,9 @@ const EventCard: React.FC<EventCardProps> = ({ event, onGetTickets }) => {
   };
 
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col">
+    <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 h-full flex flex-col"
+          style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px" }}
+    >
       <div className="h-48 overflow-hidden">
         <img 
           src={event.imageUrl} 
@@ -48,3 +50,4 @@ const EventCard: React.FC<EventCardProps> = ({ event, onGetTickets }) => {
 };
 
 export default EventCard;
+// box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
